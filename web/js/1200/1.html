@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" name="viewport">
+  <meta content="安厦" name="author"> <!-- 定义网页作者 author -->
+  <title>1数字下落</title>
+</head>
+<body bgcolor=black class="Title">
+<script language="JavaScript">
+   "use strict";
+  if (document.all.length > 0) {
+    const Cols = 6;
+    const Cl = 24;//Space's are included so real length is 48!
+    const Cs = 10;
+    const Ts = 10;
+    const Tc = '#008800';
+    const Tc1 = '#00ff00';
+    const MnS = 20;
+    const MxS = 30;
+    let I = Cs;
+    const Sp = [];
+    const S = [];
+    const Y = [];
+    const C = [];
+    const M = [];
+    const B = [];
+    const RC = [];
+    const E = [];
+    const Tcc = [0, 1];
+    document.write("<div id='Container' style='position:absolute;top:0;left:-" + Cs + "'>");
+    document.write("<div style='position:relative'>");
+    for (let i = 0; i < Cols; i++) {
+      S[i] = I += Cs;
+      console.log(S[i])
+      document.write("<div id='A' style='position:absolute;top:0;left:"+i*10 +"px;font-family:Arial,serif;font-size:"
+          + Ts + "px;left:" + S[i] + ";width:" + Ts + "px;height:0;color:" + Tc + ";visibility:hidden'></div>");
+    }
+    document.write("</div></div>");
+
+    for (let j = 0; j < Cols; j++) {
+      RC[j] = 1 + Math.round(Math.random() * Cl);
+      Y[j] = 0;
+      Sp[j] = Math.round(MnS + Math.random() * MxS);
+      for (let i = 0; i < RC[j]; i++) {
+        B[i] = '';
+        C[i] = Math.round(Math.random()) + ' ';
+        M[j] = B[0] += C[i];
+      }
+    }
+
+    function Cycle() {
+      Container.style.top = window.document.body.scrollTop;
+      for (let i = 0; i < Cols; i++) {
+        const r = Math.floor(Math.random() * Tcc.length);
+        E[i] = '<span color=' + Tc1 + '>' + Tcc[r] + '</span>';
+        Y[i] += Sp[i];
+
+        if (Y[i] > window.document.body.clientHeight) {
+          for (let i2 = 0; i2 < Cols; i2++) {
+            RC[i2] = 1 + Math.round(Math.random() * Cl);
+            for (let i3 = 0; i3 < RC[i2]; i3++) {
+              B[i3] = '';
+              C[i3] = Math.round(Math.random()) + ' ';
+              C[Math.floor(Math.random() * i2)] = '&nbsp;' + ' ';
+              M[i] = B[0] += C[i3];
+              Y[i] = -Ts * M[i].length / 1.5;
+              A[i].style.visibility = 'visible';
+            }
+            Sp[i] = Math.round(MnS + Math.random() * MxS);
+          }
+        }
+        A[i].style.top = Y[i];
+        A[i].innerHTML = M[i] + ' ' + E[i] + ' ';
+      }
+      // setTimeout(function () {
+      //   Cycle()
+      // }, 200)
+    }
+
+    Cycle();
+  }
+</script>
+</body>
+</html>
+
