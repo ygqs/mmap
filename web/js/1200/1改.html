@@ -7,7 +7,7 @@
   <meta content="安厦" name="author"> <!-- 定义网页作者 author -->
   <title>1数字下落</title>
   <style>
-    body {
+    html,body {
       position: relative;
       width: 100%;
       height: 100%;
@@ -16,41 +16,73 @@
       margin: 0 auto;
       background-color: #000000;
     }
+
+    .body_box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
     .c_box {
       position: absolute;
       top: 0;
       left: 0;
+      width: 10px;
+      /*height: 0px;*/
       font-family: Arial, serif;
       font-size: 10px;
-      width: 10px;
-      height: 0px;
       color: rgb(0, 136, 0);
+      white-space: pre-wrap;
+      overflow-wrap: break-spaces;
       visibility: visible;
     }
   </style>
 </head>
 <body bgcolor=black class="Title" id="body">
-<div id="box" class="body_box"></div>
+<div class="body_box" id="box">
+  <span class="c_box">
+    0 0 0 0 0 0 0 0 0 0 0
+  </span>
+</div>
 <script language="JavaScript">
   "use strict";
-  var obj = {
-    list_num: 50
-  }
-  window.onload =  () => {
+  window.onload = () => {
+    let obj = {
+      list_num: 50
+    };
+    run(obj);
+
     function run(obj) {
       const body = document.getElementById('body');
       const box = document.getElementById('box');
       const body_width = body.offsetWidth;
-      const list = (body_width/obj.list_num).toFixed(0);
-      console.log(list);
+      const list = (body_width / obj.list_num).toFi-xed(0);
       let str = "";
-      box.innerHTML = str;
-    }
-    function str_fun(){
+      box.innerHTML = str_fun(list);
+
+      function str_fun(list) {
+        let str = "";
+        for (let i = 0; i <= list; i++) {
+          str += '<span class="c_box" style="left: ' + (i + list) + 'px;">' +
+              math_ras(Math.floor(Math.random() * list)) +
+              '</span>';
+          //0 - 9
+        }
+        console.log(str);
+        return str;
+      }
+
+      //多个随机
+      function math_ras(num) {
+        let str = "";
+        for (let i = 0; i <= num; i++) {
+          str += Math.floor(Math.random() * 10) + " ";//0 - 9
+        }
+        return str;
+      }
+
 
     }
-    run(obj)
-
   }
 </script>
 </body>
