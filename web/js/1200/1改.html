@@ -48,7 +48,7 @@
   "use strict";
   window.onload = () => {
     let obj = {
-      list_num: 50
+      list_num: 100
     };
     run(obj);
 
@@ -56,16 +56,17 @@
       const body = document.getElementById('body');
       const box = document.getElementById('box');
       const body_width = body.offsetWidth;
-      const list = (body_width / obj.list_num).toFi-xed(0);
+      const list = (body_width / obj.list_num).toFixed(0);
+      console.log(body_width / obj.list_num)
       let str = "";
       box.innerHTML = str_fun(list);
 
       function str_fun(list) {
+        console.log(list)
         let str = "";
         for (let i = 0; i <= list; i++) {
-          str += '<span class="c_box" style="left: ' + (i + list) + 'px;">' +
-              math_ras(Math.floor(Math.random() * list)) +
-              '</span>';
+          str += '<span class="c_box" style="left: ' + (list + i ) + 'px;">' +
+              math_ras(Math.floor(Math.random() * list)) + '</span>';
           //0 - 9
         }
         console.log(str);
@@ -78,10 +79,9 @@
         for (let i = 0; i <= num; i++) {
           str += Math.floor(Math.random() * 10) + " ";//0 - 9
         }
+         str += '<span  style="color:#00ff00">'+Math.floor(Math.random() * 10) +'</span>';
         return str;
       }
-
-
     }
   }
 </script>
