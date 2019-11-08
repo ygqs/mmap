@@ -7,7 +7,7 @@
   <meta content="安厦" name="author"> <!-- 定义网页作者 author -->
   <title>1数字下落</title>
   <style>
-    html,body {
+    html, body {
       position: relative;
       width: 100%;
       height: 100%;
@@ -36,6 +36,22 @@
       overflow-wrap: break-spaces;
       visibility: visible;
     }
+
+    /*.c_box {*/
+    /*  animation: go 2s linear 0s infinite ;   !*声明动画*!*/
+    /*  !*animation-iteration-count: infinite;*!*/
+    /*}*/
+
+    /*定义动画*/
+    @keyframes go {
+      from { /*0%*/
+        /*transform: translateX(0px);*/
+      }
+      to { /*100%*/
+        top: 100%;
+        /*transform: translateX(100px);*/
+      }
+    }
   </style>
 </head>
 <body bgcolor=black class="Title" id="body">
@@ -47,41 +63,70 @@
 <script language="JavaScript">
   "use strict";
   window.onload = () => {
+    let row;
     let obj = {
       list_num: 100
     };
+    const body = document.getElementById('body');
+    const box = document.getElementById('box');
+    const body_width = box.offsetWidth;
+    const body_height = box.offsetHeight;
+    const list = (body_width / obj.list_num).toFixed(0);
+    let top_arr = [];
+    /*添加dom时间*/
+    let add_dom = body_height / 2;
     run(obj);
 
     function run(obj) {
-      const body = document.getElementById('body');
-      const box = document.getElementById('box');
-      const body_width = body.offsetWidth;
-      const list = (body_width / obj.list_num).toFixed(0);
-      console.log(body_width / obj.list_num)
       let str = "";
-      box.innerHTML = str_fun(list,obj);
-      setTimeout(function () {
-        run(obj);
-      },1000);
+      row += str_fun(list, obj);
+      box.innerHTML = row;
+      repeat_fun();
+
     }
+
     //多个随机
     function math_ras(num) {
       let str = "";
       for (let i = 0; i <= num; i++) {
         str += Math.floor(Math.random() * 10) + " ";//0 - 9
       }
-      str += '<span  style="color:#00ff00">'+Math.floor(Math.random() * 10) +'</span>';
+      str += '<span  style="color:#00ff00">' + Math.floor(Math.random() * 10) + '</span>';
       return str;
     }
-    function str_fun(list,obj) {
+
+    function str_fun(list, obj) {
       let str = "";
       for (let i = 0; i <= obj.list_num; i++) {
-        str += '<span class="c_box" style="left: ' + (parseInt(list) * i ) + 'px;">' +
-            math_ras(Math.floor(Math.random() * list)) + '</span>';
-        //0 - 9
+        str += '<span class="c_box" style="top:' + Math.floor(Math.random() * (parseInt(list) * i)) + 'px;left: ' + (parseInt(list) * i) + 'px;">' +
+            math_ras(Math.floor(Math.random() * list)) + '</span>';//0 - 9
+      }
+      return str;
+    }
+
+    console.log(body_height);
+
+    function repeat_fun() {
+      let list_show = box.getElementsByClassName("c_box");
+      console.log(list_show);
+      top_arr = [];
+      for (let i = 0; i < list_show.length; i++) {
+        top_arr[i] = parseInt(list_show[i].style.top);
+        if (parseInt(list_show[i].style.top) >= add_dom) {
+          // list_show[i].remove();
+          // console.log(parseInt(list_show[i].style.top) >= add_dom);
+          // console.log("add" + i);
+        }
+        if (parseInt(list_show[i].style.top) >= body_height) {
+          list_show[i].remove();
+        } else {
+          list_show[i].style.top = parseInt(list_show[i].style.top) + 20 + "px";
+        }
       }
 
-      return str;
+      setTimeout(function () {
+        repeat_fun()
+      }, 2);
     }
   }
 </script>
